@@ -1,0 +1,13 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+
+# Claude Code
+.claude/
+
+# Node (if npx serve creates anything)
+node_modules/
