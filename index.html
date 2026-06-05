@@ -122,9 +122,54 @@
   /* HERO */
   #hero {
     min-height: 100vh;
-    display: flex; flex-direction: column; justify-content: flex-end;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
     padding: 0 48px 80px;
     overflow: hidden;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 0;
+  }
+  .hero-spline {
+    position: relative;
+    z-index: 1;
+    height: 80vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-spline spline-viewer {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+    outline: none;
+    --spline-viewer-bg: transparent;
+  }
+  .hero-spline spline-viewer::part(logo) {
+    display: none;
+  }
+  .spline-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+  }
+  .spline-spinner {
+    width: 24px; height: 24px;
+    border: 2px solid var(--border2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
   .hero-bg-grid {
     position: absolute; inset: 0;
@@ -1002,12 +1047,14 @@
     .nav-cta { display: none; }
 
     /* Hero */
-    #hero { padding: 0 20px 60px; }
+    #hero { padding: 0 20px 40px; grid-template-columns: 1fr; align-items: end; }
+    .hero-content { padding-top: 100px; }
     .hero-headline { font-size: clamp(36px, 9vw, 52px); }
     .hero-sub { font-size: 15px; margin-top: 20px; }
     .hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 32px; }
     .hero-scroll-indicator { display: none; }
     .hero-label { margin-bottom: 20px; }
+    .hero-spline { height: 50vh; min-height: 300px; }
 
     /* Sections */
     #problem, #roles, #proof, #cases { padding: 80px 20px; }
@@ -1083,20 +1130,29 @@
   <div class="hero-bg-grid"></div>
   <div class="hero-orb"></div>
 
-  <div class="hero-label">Amoris — AI Operating System</div>
+  <div class="hero-content">
+    <div class="hero-label">Amoris — AI Operating System</div>
 
-  <h1 class="hero-headline">
-    Build an <em>AI Operating</em><br>
-    System Inside<br>Your Agency.
-  </h1>
+    <h1 class="hero-headline">
+      Build an <em>AI Operating</em><br>
+      System Inside<br>Your Agency.
+    </h1>
 
-  <p class="hero-sub">
-    Reduce repetitive work. Improve client delivery. Scale operations without proportional hiring. We design and install AI systems for marketing agencies in as little as 48 hours.
-  </p>
+    <p class="hero-sub">
+      Reduce repetitive work. Improve client delivery. Scale operations without proportional hiring. We design and install AI systems for marketing agencies in as little as 48 hours.
+    </p>
 
-  <div class="hero-actions">
-    <a href="https://calendly.com/praveenshahi13/30min" class="btn-primary" target="_blank">Book a Free Audit</a>
-    <span class="hero-meta">20 min · Your office · No pitch deck</span>
+    <div class="hero-actions">
+      <a href="https://calendly.com/praveenshahi13/30min" class="btn-primary" target="_blank">Book a Free Audit</a>
+      <span class="hero-meta">20 min · Your office · No pitch deck</span>
+    </div>
+  </div>
+
+  <div class="hero-spline">
+    <div class="spline-loading" id="splineLoader">
+      <div class="spline-spinner"></div>
+    </div>
+    <spline-viewer url="https://prod.spline.design/PyzDhpQ9E5f1E3MT/scene.splinecode" loading="lazy" events-target="global"></spline-viewer>
   </div>
 
   <div class="hero-scroll-indicator">
@@ -1501,6 +1557,21 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
+
+  // Hide Spline loader once scene loads
+  const splineEl = document.querySelector('spline-viewer');
+  if (splineEl) {
+    splineEl.addEventListener('load', () => {
+      const loader = document.getElementById('splineLoader');
+      if (loader) loader.style.display = 'none';
+    });
+    // Fallback: hide loader after 8s regardless
+    setTimeout(() => {
+      const loader = document.getElementById('splineLoader');
+      if (loader) loader.style.display = 'none';
+    }, 8000);
+  }
 </script>
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
 </body>
 </html>
