@@ -68,9 +68,66 @@
     opacity: 0.6;
   }
 
+  /* PRODUCTS BAR */
+  .products-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+    height: 36px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 48px;
+    gap: 24px;
+  }
+  .products-bar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .products-bar-sep {
+    width: 1px; height: 14px;
+    background: var(--border2);
+  }
+  .products-bar-links {
+    display: flex; gap: 20px;
+  }
+  .products-bar-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .products-bar-links a:hover { color: var(--accent); }
+  .products-bar-links .pb-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+  .products-bar-links a:hover .pb-dot { opacity: 1; }
+  .products-bar-right {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  @media (max-width: 768px) {
+    .products-bar { padding: 0 20px; }
+    .products-bar-label { display: none; }
+    .products-bar-sep { display: none; }
+  }
+
   /* NAV */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    position: fixed; top: 36px; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 24px 48px;
     border-bottom: 1px solid transparent;
@@ -1048,7 +1105,7 @@
 
     /* Hero */
     #hero { padding: 0 20px 40px; grid-template-columns: 1fr; align-items: end; }
-    .hero-content { padding-top: 100px; }
+    .hero-content { padding-top: 136px; }
     .hero-headline { font-size: clamp(36px, 9vw, 52px); }
     .hero-sub { font-size: 15px; margin-top: 20px; }
     .hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 32px; }
@@ -1110,6 +1167,17 @@
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PRODUCTS BAR -->
+<div class="products-bar">
+  <span class="products-bar-label">AI Products</span>
+  <div class="products-bar-sep"></div>
+  <div class="products-bar-links">
+    <a href="/intel-echo/"><span class="pb-dot"></span>Intel Echo — Intelligence Layer</a>
+    <a href="/intel-echo-gtm/"><span class="pb-dot"></span>Intel Echo GTM — Messaging Loop</a>
+  </div>
+  <div class="products-bar-right">amoris.in</div>
+</div>
 
 <!-- NAV -->
 <nav id="navbar">
